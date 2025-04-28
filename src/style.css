@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+pre.shiki {
+    padding: 1.5rem; /* o el valor que querai */
+    border-radius: 0.75rem; /* opcional, para que no sea cuadrado rígido */
+    overflow-x: auto; /* si se pasa de ancho */
+}
