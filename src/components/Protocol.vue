@@ -18,7 +18,7 @@
     <!-- Insert Request -->
     <div class="max-w-5xl w-full mb-24">
       <h3 class="text-2xl font-light mb-6">Insert Request</h3>
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         <ProtocolBox title="Request Type" size="1 byte" />
         <ProtocolBox title="Quota" size="8 bytes" />
         <ProtocolBox title="Usage" size="8 bytes" />
@@ -32,9 +32,9 @@
     </div>
 
     <!-- Query and Purge Request -->
-    <div class="max-w-3xl w-full mb-24">
+    <div class="max-w-5xl w-full mb-24">
       <h3 class="text-2xl font-light mb-6">Query & Purge Request</h3>
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         <ProtocolBox title="Request Type" size="1 byte" />
         <ProtocolBox title="Consumer ID Size" size="1 byte" />
         <ProtocolBox title="Resource ID Size" size="1 byte" />
@@ -44,9 +44,9 @@
     </div>
 
     <!-- Update Request -->
-    <div class="max-w-4xl w-full mb-24">
+    <div class="max-w-5xl w-full mb-24">
       <h3 class="text-2xl font-light mb-6">Update Request</h3>
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         <ProtocolBox title="Request Type" size="1 byte" />
         <ProtocolBox title="Attribute" size="1 byte" />
         <ProtocolBox title="Change Type" size="1 byte" />
@@ -59,11 +59,12 @@
     </div>
 
     <!-- Response -->
-    <div class="max-w-2xl w-full">
+    <div class="max-w-5xl w-full">
       <h3 class="text-2xl font-light mb-6">Response</h3>
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         <ProtocolBox title="Can or Success" size="1 byte" />
         <ProtocolBox title="Quota Remaining" size="8 bytes" />
+        <ProtocolBox title="TTL Type" size="1 byte" />
         <ProtocolBox title="TTL Remaining" size="8 bytes" />
       </div>
       <p class="mt-6 text-sm uppercase tracking-widest"

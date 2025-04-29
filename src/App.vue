@@ -4,14 +4,20 @@ import About from './components/About.vue'
 import Protocol from "./components/Protocol.vue";
 import Example from "./components/Example.vue";
 import Footer from "./components/Footer.vue";
+import { useDark } from '@vueuse/core'
+
+const isDark = useDark()
 </script>
 
 <template>
-  <Hero />
-  <About />
-  <Protocol />
-  <Example />
-  <Footer />
+  <div class="p-8"
+       :class="isDark ? 'bg-black text-white' : 'bg-white text-black'">
+    <Hero />
+    <About />
+    <Protocol />
+    <Example />
+    <Footer />
+  </div>
 </template>
 
 <style scoped>
