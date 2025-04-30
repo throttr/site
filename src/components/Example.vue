@@ -14,8 +14,11 @@
       <i class="devicon-docker-plain" style="font-size: 4rem;"></i> Run the server
     </h2>
 
-    <div class="p-10 rounded-2xl mb-10" style="background-color: rgb(243, 243, 243);">
+    <div class="max-w-4xl w-full px-4 text-left">
+
+    <div class="overflow-auto p-10 rounded-2xl mb-10" style="background-color: rgb(243, 243, 243);">
       <pre style="font-family:monospace;color: rgb(68, 68, 68); background-color: rgb(243, 243, 243); font-weight: 400; ">docker run -e THREADS=4 -p 9000:9000 ghcr.io/throttr/throttr:2.0.1-release</pre>
+    </div>
     </div>
 
     <p class="mt-0 mb-20 text-sm uppercase tracking-widest"
