@@ -3,10 +3,29 @@
       class="w-full py-60 flex flex-col items-center justify-center text-center transition-colors duration-500"
       :class="isDark ? 'bg-black text-white' : 'bg-white text-black'"
   >
-    <img :src="isDark ? '/how-works-black.png' : '/how-works-white.png'" alt="The Protocol" class="max-h-80 rounded-full mb-24">
+    <img :src="isDark ? '/how-works-black.png' : '/how-works-white.png'" alt="The Protocol"
+         class="max-h-80 rounded-full mb-24">
 
     <h2 class="text-3xl md:text-5xl font-light tracking-wide mb-24">
       It's a free choice
+    </h2>
+
+    <h2 class="text-3xl md:text-5xl font-light tracking-wide mb-24">
+      <i class="devicon-docker-plain" style="font-size: 4rem;"></i> Run the server
+    </h2>
+
+    <div class="p-10 rounded-2xl mb-10" style="background-color: rgb(243, 243, 243);">
+      <pre style="font-family:monospace;color: rgb(68, 68, 68); background-color: rgb(243, 243, 243); font-weight: 400; ">docker run -e THREADS=4 -p 9000:9000 ghcr.io/throttr/throttr:2.0.1-release</pre>
+    </div>
+
+    <p class="mt-0 mb-20 text-sm uppercase tracking-widest"
+       :class="isDark ? 'text-gray-500' : 'text-gray-500'">
+      It's power compressed in 1.5mb.
+    </p>
+
+
+    <h2 class="text-3xl md:text-5xl font-light text-left tracking-wide mb-24">
+      Use SDK's
     </h2>
 
     <!-- Language Selector -->
@@ -20,37 +39,247 @@
           ? (isDark ? 'bg-gray-700 border-gray-500' : 'bg-gray-200 border-gray-400')
           : (isDark ? 'bg-transparent border-gray-600' : 'bg-transparent border-gray-300')"
       >
+        <i :class="implementations[index].icon" style="font-size: 2rem;"></i><br>
+
         {{ implementations[index].name }}
       </button>
     </div>
 
     <!-- Code Block -->
     <div class="max-w-4xl w-full px-4 text-left">
-      <div
-          v-html="highlightedCode"
-          class="rounded-lg overflow-x-auto p-2 rounded-2xl shadow border transition-all duration-500 mb-10"
-          :class="[isDark ? 'border-gray-800' : 'border-gray-200']"
-      ></div>
+
+      <div v-if="implementations[selected].name === 'TypeScript'" class="overflow-auto p-8 rounded-4xl"
+           style="background-color: rgb(243, 243, 243);">
+
+        <pre style="font-family:monospace;color: rgb(68, 68, 68); background-color: rgb(243, 243, 243); font-weight: 400; "><span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> {
+  <span style="color: rgb(136, 0, 0); font-weight: 700;">Service</span>,
+  <span style="color: rgb(136, 0, 0); font-weight: 700;">RequestType</span>,
+  <span style="color: rgb(136, 0, 0); font-weight: 700;">TTLType</span>,
+  <span style="color: rgb(136, 0, 0); font-weight: 700;">AttributeType</span>,
+  <span style="color: rgb(136, 0, 0); font-weight: 700;">ChangeType</span>
+} <span style="color: rgb(68, 68, 68); font-weight: 700;">from</span> <span style="color: rgb(136, 0, 0); font-weight: 400;">"@throttr/sdk"</span>;
+
+<span style="color: rgb(68, 68, 68); font-weight: 700;">const</span> service = <span style="color: rgb(68, 68, 68); font-weight: 700;">new</span> <span style="color: rgb(136, 0, 0); font-weight: 700;">Service</span>({
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">host</span>: <span style="color: rgb(136, 0, 0); font-weight: 400;">"127.0.0.1"</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">port</span>: <span style="color: rgb(136, 0, 0); font-weight: 400;">9000</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">max_connections</span>: <span style="color: rgb(136, 0, 0); font-weight: 400;">4</span>, <span style="color: rgb(105, 112, 112); font-weight: 400;">// Optional: configure concurrent connections</span>
+});
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Define a consumer (example: IP + port, UUID, or custom identifier)</span>
+<span style="color: rgb(68, 68, 68); font-weight: 700;">const</span> consumerId = <span style="color: rgb(136, 0, 0); font-weight: 400;">"127.0.0.1:1234"</span>;
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Define a resource (example: METHOD + URL, or any identifier)</span>
+<span style="color: rgb(68, 68, 68); font-weight: 700;">const</span> resourceId = <span style="color: rgb(136, 0, 0); font-weight: 400;">"GET /api/resource"</span>;
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Connect to Throttr</span>
+<span style="color: rgb(68, 68, 68); font-weight: 700;">await</span> service.<span style="color: rgb(136, 0, 0); font-weight: 700;">connect</span>();
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Insert quota for a consumer-resource pair</span>
+<span style="color: rgb(68, 68, 68); font-weight: 700;">const</span> insert_response = <span style="color: rgb(68, 68, 68); font-weight: 700;">await</span> service.<span style="color: rgb(136, 0, 0); font-weight: 700;">send</span>({
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">type</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">RequestType</span>.<span style="color: rgb(68, 68, 68); font-weight: 400;">Insert</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">consumer_id</span>: consumerId,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">resource_id</span>: resourceId,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">quota</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">BigInt</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">5</span>),
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">usage</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">BigInt</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">0</span>),
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">ttl_type</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">TTLType</span>.<span style="color: rgb(68, 68, 68); font-weight: 400;">Milliseconds</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">ttl</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">BigInt</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">3000</span>), <span style="color: rgb(105, 112, 112); font-weight: 400;">// 3 seconds</span>
+});
+
+<span style="color: rgb(171, 86, 86); font-weight: 400;">console</span>.<span style="color: rgb(136, 0, 0); font-weight: 700;">log</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">"Allowed:"</span>, insert_response.<span style="color: rgb(68, 68, 68); font-weight: 400;">allowed</span>);
+<span style="color: rgb(171, 86, 86); font-weight: 400;">console</span>.<span style="color: rgb(136, 0, 0); font-weight: 700;">log</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">"Remaining:"</span>, insert_response.<span style="color: rgb(68, 68, 68); font-weight: 400;">quota_remaining</span>);
+<span style="color: rgb(171, 86, 86); font-weight: 400;">console</span>.<span style="color: rgb(136, 0, 0); font-weight: 700;">log</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">"TTL:"</span>, insert_response.<span style="color: rgb(68, 68, 68); font-weight: 400;">ttl_remaining</span>);
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Update the available quota</span>
+<span style="color: rgb(68, 68, 68); font-weight: 700;">await</span> service.<span style="color: rgb(136, 0, 0); font-weight: 700;">send</span>({
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">type</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">RequestType</span>.<span style="color: rgb(68, 68, 68); font-weight: 400;">Update</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">attribute</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">AttributeType</span>.<span style="color: rgb(68, 68, 68); font-weight: 400;">Quota</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">change</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">ChangeType</span>.<span style="color: rgb(68, 68, 68); font-weight: 400;">Decrease</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">value</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">BigInt</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">1</span>),
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">consumer_id</span>: consumerId,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">resource_id</span>: resourceId,
+});
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Query the available quota</span>
+<span style="color: rgb(68, 68, 68); font-weight: 700;">const</span> query_response = <span style="color: rgb(68, 68, 68); font-weight: 700;">await</span> service.<span style="color: rgb(136, 0, 0); font-weight: 700;">send</span>({
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">type</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">RequestType</span>.<span style="color: rgb(68, 68, 68); font-weight: 400;">Query</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">consumer_id</span>: consumerId,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">resource_id</span>: resourceId,
+});
+
+<span style="color: rgb(171, 86, 86); font-weight: 400;">console</span>.<span style="color: rgb(136, 0, 0); font-weight: 700;">log</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">"Allowed:"</span>, query_response.<span style="color: rgb(68, 68, 68); font-weight: 400;">allowed</span>);
+<span style="color: rgb(171, 86, 86); font-weight: 400;">console</span>.<span style="color: rgb(136, 0, 0); font-weight: 700;">log</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">"Remaining:"</span>, query_response.<span style="color: rgb(68, 68, 68); font-weight: 400;">quota_remaining</span>);
+<span style="color: rgb(171, 86, 86); font-weight: 400;">console</span>.<span style="color: rgb(136, 0, 0); font-weight: 700;">log</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">"TTL:"</span>, query_response.<span style="color: rgb(68, 68, 68); font-weight: 400;">ttl_remaining</span>);
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Optionally, purge the quota</span>
+<span style="color: rgb(68, 68, 68); font-weight: 700;">await</span> service.<span style="color: rgb(136, 0, 0); font-weight: 700;">send</span>({
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">type</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">RequestType</span>.<span style="color: rgb(68, 68, 68); font-weight: 400;">Purge</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">consumer_id</span>: consumerId,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">resource_id</span>: resourceId,
+});
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Disconnect once done</span>
+service.<span style="color: rgb(136, 0, 0); font-weight: 700;">disconnect</span>();</pre>
 
 
-      <a
-          :href="implementations[selected].source"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="hover:underline p-4 mb-10"
-      >
-        <img :src="isDark ? '/github-mark-white.svg' : '/github-mark.svg'" alt="GitHub" class="h-8 -mt-2 mr-4 inline-block">
-        Are you ready? Get the code.
-      </a>
+      </div>
+
+      <div v-else-if="implementations[selected].name === 'PHP'" class="overflow-auto p-8 rounded-4xl"
+           style="background-color: rgb(243, 243, 243);">
+
+<pre style="font-family:monospace;color: rgb(68, 68, 68); background-color: rgb(243, 243, 243); font-weight: 400; "><span style="color: rgb(31, 113, 153); font-weight: 400;">&lt;?php</span>
+
+<span style="color: rgb(68, 68, 68); font-weight: 700;">require</span> <span style="color: rgb(136, 0, 0); font-weight: 400;">'vendor/autoload.php'</span>;
+
+<span style="color: rgb(68, 68, 68); font-weight: 700;">use</span> <span style="color: rgb(136, 0, 0); font-weight: 700;">Throttr</span>\<span style="color: rgb(136, 0, 0); font-weight: 700;">SDK</span>\<span style="color: rgb(136, 0, 0); font-weight: 700;">Service</span>;
+<span style="color: rgb(68, 68, 68); font-weight: 700;">use</span> <span style="color: rgb(136, 0, 0); font-weight: 700;">Throttr</span>\<span style="color: rgb(136, 0, 0); font-weight: 700;">SDK</span>\<span style="color: rgb(136, 0, 0); font-weight: 700;">Enum</span>\<span style="color: rgb(136, 0, 0); font-weight: 700;">TTLType</span>;
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Configure your instance with 4 connections ...</span>
+<span style="color: rgb(171, 86, 86); font-weight: 400;">$service</span> = <span style="color: rgb(68, 68, 68); font-weight: 700;">new</span> <span style="color: rgb(136, 0, 0); font-weight: 700;">Service</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">'127.0.0.1'</span>, <span style="color: rgb(136, 0, 0); font-weight: 400;">9000</span>, <span style="color: rgb(136, 0, 0); font-weight: 400;">4</span>);
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Define a consumer ... it can be an IP and port or UUID, whatever ...</span>
+<span style="color: rgb(171, 86, 86); font-weight: 400;">$consumerId</span> = <span style="color: rgb(136, 0, 0); font-weight: 400;">"127.0.0.1"</span>;
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Define the resource ... it can be a METHOD + URL or UUID, whatever ...</span>
+<span style="color: rgb(171, 86, 86); font-weight: 400;">$resourceId</span> = <span style="color: rgb(136, 0, 0); font-weight: 400;">"/api/resource"</span>;
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Connect to Throttr</span>
+<span style="color: rgb(171, 86, 86); font-weight: 400;">$service</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">connect</span>();
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Add limit to the registry</span>
+<span style="color: rgb(171, 86, 86); font-weight: 400;">$service</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">insert</span>(
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">consumerId</span>: <span style="color: rgb(171, 86, 86); font-weight: 400;">$consumerId</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">resourceId</span>: <span style="color: rgb(171, 86, 86); font-weight: 400;">$resourceId</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">ttl</span>: <span style="color: rgb(136, 0, 0); font-weight: 400;">3000</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">ttlType</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">TTLType</span>::<span style="color: rgb(171, 86, 86); font-weight: 400;">MILLISECONDS</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">quota</span>: <span style="color: rgb(136, 0, 0); font-weight: 400;">5</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">usage</span>: <span style="color: rgb(136, 0, 0); font-weight: 400;">0</span>
+);
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Do you want to know if that was stored?</span>
+<span style="color: rgb(171, 86, 86); font-weight: 400;">$response</span> = <span style="color: rgb(171, 86, 86); font-weight: 400;">$service</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">query</span>(
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">consumerId</span>: <span style="color: rgb(171, 86, 86); font-weight: 400;">$consumerId</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">resourceId</span>: <span style="color: rgb(171, 86, 86); font-weight: 400;">$resourceId</span>,
+);
+
+<span style="color: rgb(136, 0, 0); font-weight: 700;">printf</span>(
+    <span style="color: rgb(136, 0, 0); font-weight: 400;">"Allowed: %s, Remaining: %d, TTL: %dms\n"</span>,
+    <span style="color: rgb(171, 86, 86); font-weight: 400;">$response</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">can</span>() ? <span style="color: rgb(136, 0, 0); font-weight: 400;">'true'</span> : <span style="color: rgb(136, 0, 0); font-weight: 400;">'false'</span>,
+    <span style="color: rgb(171, 86, 86); font-weight: 400;">$response</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">quotaRemaining</span>() ?? <span style="color: rgb(136, 0, 0); font-weight: 400;">0</span>,
+    (<span style="color: rgb(68, 68, 68); font-weight: 700;">int</span>)(<span style="color: rgb(171, 86, 86); font-weight: 400;">$response</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">ttlRemainingSeconds</span>() * <span style="color: rgb(136, 0, 0); font-weight: 400;">1000</span>)
+);
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Do you want to update the quota?</span>
+<span style="color: rgb(171, 86, 86); font-weight: 400;">$service</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">update</span>(
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">consumerId</span>: <span style="color: rgb(171, 86, 86); font-weight: 400;">$consumerId</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">resourceId</span>: <span style="color: rgb(171, 86, 86); font-weight: 400;">$resourceId</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">attribute</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">AttributeType</span>::<span style="color: rgb(171, 86, 86); font-weight: 400;">QUOTA</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">change</span>: <span style="color: rgb(136, 0, 0); font-weight: 700;">ChangeType</span>::<span style="color: rgb(171, 86, 86); font-weight: 400;">DECREASE</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">value</span>: <span style="color: rgb(136, 0, 0); font-weight: 400;">1</span>
+);
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Do you want to know the new value?</span>
+<span style="color: rgb(171, 86, 86); font-weight: 400;">$response</span> = <span style="color: rgb(171, 86, 86); font-weight: 400;">$service</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">query</span>(
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">consumerId</span>: <span style="color: rgb(171, 86, 86); font-weight: 400;">$consumerId</span>,
+    <span style="color: rgb(68, 68, 68); font-weight: 400;">resourceId</span>: <span style="color: rgb(171, 86, 86); font-weight: 400;">$resourceId</span>,
+);
+
+<span style="color: rgb(136, 0, 0); font-weight: 700;">printf</span>(
+    <span style="color: rgb(136, 0, 0); font-weight: 400;">"Allowed: %s, Remaining: %d, TTL: %dms\n"</span>,
+    <span style="color: rgb(171, 86, 86); font-weight: 400;">$response</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">can</span>() ? <span style="color: rgb(136, 0, 0); font-weight: 400;">'true'</span> : <span style="color: rgb(136, 0, 0); font-weight: 400;">'false'</span>,
+    <span style="color: rgb(171, 86, 86); font-weight: 400;">$response</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">quotaRemaining</span>() ?? <span style="color: rgb(136, 0, 0); font-weight: 400;">0</span>,
+    (<span style="color: rgb(68, 68, 68); font-weight: 700;">int</span>)(<span style="color: rgb(171, 86, 86); font-weight: 400;">$response</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">ttlRemainingSeconds</span>() * <span style="color: rgb(136, 0, 0); font-weight: 400;">1000</span>)
+);
+
+<span style="color: rgb(105, 112, 112); font-weight: 400;">// Close the connections ...</span>
+<span style="color: rgb(171, 86, 86); font-weight: 400;">$service</span>-&gt;<span style="color: rgb(136, 0, 0); font-weight: 700;">close</span>();</pre>
+
+      </div>
+
+      <div v-else-if="implementations[selected].name === 'Java'" class="overflow-auto p-8 rounded-4xl"
+           style="background-color: rgb(243, 243, 243);">
+<pre style="font-family:monospace;color: rgb(68, 68, 68); background-color: rgb(243, 243, 243); font-weight: 400; "><span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> cl.throttr.Service;
+<span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> cl.throttr.InsertRequest;
+<span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> cl.throttr.QueryRequest;
+<span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> cl.throttr.UpdateRequest;
+<span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> cl.throttr.PurgeRequest;
+<span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> cl.throttr.TTLType;
+<span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> cl.throttr.AttributeType;
+<span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> cl.throttr.ChangeType;
+<span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> cl.throttr.FullResponse;
+<span style="color: rgb(68, 68, 68); font-weight: 700;">import</span> cl.throttr.SimpleResponse;
+
+<span style="color: rgb(136, 0, 0); font-weight: 400;">Service</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">service</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">=</span> <span style="color: rgb(68, 68, 68); font-weight: 700;">new</span> <span style="color: rgb(136, 0, 0); font-weight: 700;">Service</span>(<span style="color: rgb(136, 0, 0); font-weight: 400;">"127.0.0.1"</span>, <span style="color: rgb(136, 0, 0); font-weight: 400;">9000</span>, <span style="color: rgb(136, 0, 0); font-weight: 400;">4</span>);  <span style="color: rgb(105, 112, 112); font-weight: 400;">// Max connections = 4</span>
+
+<span style="color: rgb(68, 68, 68); font-weight: 700;">try</span> {
+  <span style="color: rgb(105, 112, 112); font-weight: 400;">// Connect to Throttr</span>
+  service.connect();
+
+  <span style="color: rgb(105, 112, 112); font-weight: 400;">// Define a consumer and resource</span>
+  <span style="color: rgb(136, 0, 0); font-weight: 400;">String</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">consumerId</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">=</span> <span style="color: rgb(136, 0, 0); font-weight: 400;">"127.0.0.1:1234"</span>;
+  <span style="color: rgb(136, 0, 0); font-weight: 400;">String</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">resourceId</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">=</span> <span style="color: rgb(136, 0, 0); font-weight: 400;">"GET /api/resource"</span>;
+
+  <span style="color: rgb(105, 112, 112); font-weight: 400;">// Insert quota</span>
+  CompletableFuture&lt;Object&gt; insertFuture = service.send(<span style="color: rgb(68, 68, 68); font-weight: 700;">new</span> <span style="color: rgb(136, 0, 0); font-weight: 700;">InsertRequest</span>(
+      <span style="color: rgb(136, 0, 0); font-weight: 400;">5L</span>, <span style="color: rgb(136, 0, 0); font-weight: 400;">0L</span>, TTLType.Milliseconds, <span style="color: rgb(136, 0, 0); font-weight: 400;">3000L</span>, consumerId, resourceId));
+  <span style="color: rgb(136, 0, 0); font-weight: 400;">FullResponse</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">insertResponse</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">=</span> (FullResponse)insertFuture.get();
+
+  System.out.println(<span style="color: rgb(136, 0, 0); font-weight: 400;">"Allowed: "</span> + insertResponse.allowed());
+  System.out.println(<span style="color: rgb(136, 0, 0); font-weight: 400;">"Remaining: "</span> + insertResponse.quotaRemaining());
+  System.out.println(<span style="color: rgb(136, 0, 0); font-weight: 400;">"TTL type: "</span> + insertResponse.ttlType());
+  System.out.println(<span style="color: rgb(136, 0, 0); font-weight: 400;">"TTL remaining: "</span> + insertResponse.ttlRemaining());
+
+  <span style="color: rgb(105, 112, 112); font-weight: 400;">// Update the quota</span>
+  CompletableFuture&lt;Object&gt; updateFuture = service.send(<span style="color: rgb(68, 68, 68); font-weight: 700;">new</span> <span style="color: rgb(136, 0, 0); font-weight: 700;">UpdateRequest</span>(
+      AttributeType.QUOTA, ChangeType.DECREASE, <span style="color: rgb(136, 0, 0); font-weight: 400;">1L</span>, consumerId, resourceId));
+  <span style="color: rgb(136, 0, 0); font-weight: 400;">SimpleResponse</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">updateResponse</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">=</span> (SimpleResponse)updateFuture.get();
+  System.out.println(<span style="color: rgb(136, 0, 0); font-weight: 400;">"Quota updated successfully: "</span> + updateResponse.success());
+
+  <span style="color: rgb(105, 112, 112); font-weight: 400;">// Query the quota</span>
+  CompletableFuture&lt;Object&gt; queryFuture =
+      service.send(<span style="color: rgb(68, 68, 68); font-weight: 700;">new</span> <span style="color: rgb(136, 0, 0); font-weight: 700;">QueryRequest</span>(consumerId, resourceId));
+  <span style="color: rgb(136, 0, 0); font-weight: 400;">FullResponse</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">queryResponse</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">=</span> (FullResponse)queryFuture.get();
+
+  System.out.println(<span style="color: rgb(136, 0, 0); font-weight: 400;">"Allowed after update: "</span> + queryResponse.allowed());
+  System.out.println(<span style="color: rgb(136, 0, 0); font-weight: 400;">"Remaining after update: "</span> +
+                     queryResponse.quotaRemaining());
+  System.out.println(<span style="color: rgb(136, 0, 0); font-weight: 400;">"TTL type: "</span> + queryResponse.ttlType());
+  System.out.println(<span style="color: rgb(136, 0, 0); font-weight: 400;">"TTL after update: "</span> + queryResponse.ttlRemaining());
+
+  <span style="color: rgb(105, 112, 112); font-weight: 400;">// Optionally, purge the quota</span>
+  CompletableFuture&lt;Object&gt; purgeFuture =
+      service.send(<span style="color: rgb(68, 68, 68); font-weight: 700;">new</span> <span style="color: rgb(136, 0, 0); font-weight: 700;">PurgeRequest</span>(consumerId, resourceId));
+  <span style="color: rgb(136, 0, 0); font-weight: 400;">SimpleResponse</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">purgeResponse</span> <span style="color: rgb(171, 86, 86); font-weight: 400;">=</span> (SimpleResponse)purgeFuture.get();
+  System.out.println(<span style="color: rgb(136, 0, 0); font-weight: 400;">"Purge success: "</span> + purgeResponse.success());
+
+} <span style="color: rgb(68, 68, 68); font-weight: 700;">catch</span> (Exception e) {
+  e.printStackTrace();
+} <span style="color: rgb(68, 68, 68); font-weight: 700;">finally</span> {
+  <span style="color: rgb(105, 112, 112); font-weight: 400;">// Disconnect once done</span>
+  service.close();
+}</pre>
+
+      </div>
+
+      <div class="mt-10">
+        <a
+            :href="implementations[selected].source"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:underline p-4 mb-10"
+        >
+          <img :src="isDark ? '/github-mark-white.svg' : '/github-mark.svg'" alt="GitHub"
+               class="h-8 -mt-2 mr-4 inline-block">
+          Are you ready? Get the code.
+        </a>
+      </div>
 
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
-import { useDark } from '@vueuse/core'
-import { highlight } from '../utils/highlight'
+import {ref} from 'vue'
+import {useDark} from '@vueuse/core'
 
 const isDark = useDark()
 
@@ -62,218 +291,22 @@ const implementations = ref([
   {
     source: 'https://github.com/throttr/typescript',
     name: "TypeScript",
-    code: `import {
-  Service,
-  RequestType,
-  TTLType,
-  AttributeType,
-  ChangeType
-} from "@throttr/sdk";
-
-const service = new Service({
-    host: "127.0.0.1",
-    port: 9000,
-    max_connections: 4, // Optional: configure concurrent connections
-});
-
-// Define a consumer (example: IP + port, UUID, or custom identifier)
-const consumerId = "127.0.0.1:1234";
-
-// Define a resource (example: METHOD + URL, or any identifier)
-const resourceId = "GET /api/resource";
-
-// Connect to Throttr
-await service.connect();
-
-// Insert quota for a consumer-resource pair
-const insert_response = await service.send({
-    type: RequestType.Insert,
-    consumer_id: consumerId,
-    resource_id: resourceId,
-    quota: BigInt(5),
-    usage: BigInt(0),
-    ttl_type: TTLType.Milliseconds,
-    ttl: BigInt(3000), // 3 seconds
-});
-
-console.log("Allowed:", insert_response.allowed);
-console.log("Remaining:", insert_response.quota_remaining);
-console.log("TTL:", insert_response.ttl_remaining);
-
-// Update the available quota
-await service.send({
-    type: RequestType.Update,
-    attribute: AttributeType.Quota,
-    change: ChangeType.Decrease,
-    value: BigInt(1),
-    consumer_id: consumerId,
-    resource_id: resourceId,
-});
-
-// Query the available quota
-const query_response = await service.send({
-    type: RequestType.Query,
-    consumer_id: consumerId,
-    resource_id: resourceId,
-});
-
-console.log("Allowed:", query_response.allowed);
-console.log("Remaining:", query_response.quota_remaining);
-console.log("TTL:", query_response.ttl_remaining);
-
-// Optionally, purge the quota
-await service.send({
-    type: RequestType.Purge,
-    consumer_id: consumerId,
-    resource_id: resourceId,
-});
-
-// Disconnect once done
-service.disconnect();`
+    code: '',
+    icon: 'devicon-typescript-plain',
   },
   {
     source: 'https://github.com/throttr/php',
     name: "PHP",
-    code: `<?php
-
-require 'vendor/autoload.php';
-
-use Throttr\\SDK\\Service;
-use Throttr\\SDK\\Enum\\TTLType;
-
-// Configure your instance with 4 connections ...
-$service = new Service('127.0.0.1', 9000, 4);
-
-// Define a consumer ... it can be an IP and port or UUID, whatever ...
-$consumerId = "127.0.0.1";
-
-// Define the resource ... it can be a METHOD + URL or UUID, whatever ...
-$resourceId = "/api/resource";
-
-// Connect to Throttr
-$service->connect();
-
-// Add limit to the registry
-$service->insert(
-    consumerId: $consumerId,
-    resourceId: $resourceId,
-    ttl: 3000,
-    ttlType: TTLType::MILLISECONDS,
-    quota: 5,
-    usage: 0
-);
-
-// Do you want to know if that was stored?
-$response = $service->query(
-    consumerId: $consumerId,
-    resourceId: $resourceId,
-);
-
-printf(
-    "Allowed: %s, Remaining: %d, TTL: %dms\\n",
-    $response->can() ? 'true' : 'false',
-    $response->quotaRemaining() ?? 0,
-    (int)($response->ttlRemainingSeconds() * 1000)
-);
-
-// Do you want to update the quota?
-$service->update(
-    consumerId: $consumerId,
-    resourceId: $resourceId,
-    attribute: AttributeType::QUOTA,
-    change: ChangeType::DECREASE,
-    value: 1
-);
-
-// Do you want to know the new value?
-$response = $service->query(
-    consumerId: $consumerId,
-    resourceId: $resourceId,
-);
-
-printf(
-    "Allowed: %s, Remaining: %d, TTL: %dms\\n",
-    $response->can() ? 'true' : 'false',
-    $response->quotaRemaining() ?? 0,
-    (int)($response->ttlRemainingSeconds() * 1000)
-);
-
-// Close the connections ...
-$service->close();`
+    code: '',
+    icon: 'devicon-php-plain',
   },
   {
     source: 'https://github.com/throttr/java',
     name: "Java",
-    code: `import cl.throttr.Service;
-import cl.throttr.InsertRequest;
-import cl.throttr.QueryRequest;
-import cl.throttr.UpdateRequest;
-import cl.throttr.PurgeRequest;
-import cl.throttr.TTLType;
-import cl.throttr.AttributeType;
-import cl.throttr.ChangeType;
-import cl.throttr.FullResponse;
-import cl.throttr.SimpleResponse;
-
-Service service = new Service("127.0.0.1", 9000, 4);  // Max connections = 4
-
-try {
-  // Connect to Throttr
-  service.connect();
-
-  // Define a consumer and resource
-  String consumerId = "127.0.0.1:1234";
-  String resourceId = "GET /api/resource";
-
-  // Insert quota
-  CompletableFuture<Object> insertFuture = service.send(new InsertRequest(
-      5L, 0L, TTLType.Milliseconds, 3000L, consumerId, resourceId));
-  FullResponse insertResponse = (FullResponse)insertFuture.get();
-
-  System.out.println("Allowed: " + insertResponse.allowed());
-  System.out.println("Remaining: " + insertResponse.quotaRemaining());
-  System.out.println("TTL type: " + insertResponse.ttlType());
-  System.out.println("TTL remaining: " + insertResponse.ttlRemaining());
-
-  // Update the quota
-  CompletableFuture<Object> updateFuture = service.send(new UpdateRequest(
-      AttributeType.QUOTA, ChangeType.DECREASE, 1L, consumerId, resourceId));
-  SimpleResponse updateResponse = (SimpleResponse)updateFuture.get();
-  System.out.println("Quota updated successfully: " + updateResponse.success());
-
-  // Query the quota
-  CompletableFuture<Object> queryFuture =
-      service.send(new QueryRequest(consumerId, resourceId));
-  FullResponse queryResponse = (FullResponse)queryFuture.get();
-
-  System.out.println("Allowed after update: " + queryResponse.allowed());
-  System.out.println("Remaining after update: " +
-                     queryResponse.quotaRemaining());
-  System.out.println("TTL type: " + queryResponse.ttlType());
-  System.out.println("TTL after update: " + queryResponse.ttlRemaining());
-
-  // Optionally, purge the quota
-  CompletableFuture<Object> purgeFuture =
-      service.send(new PurgeRequest(consumerId, resourceId));
-  SimpleResponse purgeResponse = (SimpleResponse)purgeFuture.get();
-  System.out.println("Purge success: " + purgeResponse.success());
-
-} catch (Exception e) {
-  e.printStackTrace();
-} finally {
-  // Disconnect once done
-  service.close();
-}`
+    code: '',
+    icon: 'devicon-java-plain',
   }
 ])
-
-const highlightedCode = ref('')
-
-watchEffect(async () => {
-  const theme = isDark.value ? 'github-dark' : 'github-light'
-  // @ts-ignore
-  highlightedCode.value = await highlight(implementations.value[selected.value].code, implementations.value[selected.value].name.toLowerCase(), theme)
-})
 </script>
 
 <style scoped>
