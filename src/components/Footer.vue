@@ -34,11 +34,17 @@
           class="hover:underline"
       >
         <img :src="'/npm.svg'" alt="NPM" class="h-5 -mt-1 ml-4 mr-4 inline-block">
-        NPM Registry
+        Registry
       </a>
     </div>
 
+
     <div class="text-xs mt-20 mb-10">
+
+      <div class="justify-center flex">
+        <img src="/8731267.jpeg" class="h-16 rounded-full mb-8" alt="Ian Torres">
+      </div>
+
       Built with sovereignty by <a href="https://www.iantorres.cl" class="font-bold">Ian Torres</a>. <br><br> Released under AGPLv3.
     </div>
   </footer>
