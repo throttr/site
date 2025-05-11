@@ -18,13 +18,13 @@
 
       <div class="overflow-auto p-10 rounded-2xl mb-10 text-center" style="background-color: rgb(243, 243, 243);">
         <pre class="pre-styled" style="margin-bottom: 20px;">Quotas and TTL upto <strong>255</strong>:</pre>
-        <pre class="pre-styled">docker run -p 9000:9000 ghcr.io/throttr/throttr:4.0.11-release-uint8</pre>
+        <pre class="pre-styled">docker run -p 9000:9000 ghcr.io/throttr/throttr:4.0.13-release-uint8</pre>
         <pre class="pre-styled" style="margin-bottom: 20px; margin-top: 60px;">Quotas and TTL upto <strong>65.535</strong>:</pre>
-        <pre class="pre-styled">docker run -p 9000:9000 ghcr.io/throttr/throttr:4.0.11-release-uint16</pre>
+        <pre class="pre-styled">docker run -p 9000:9000 ghcr.io/throttr/throttr:4.0.13-release-uint16</pre>
         <pre class="pre-styled" style="margin-bottom: 20px; margin-top: 60px;">Quotas and TTL upto <strong>4.294.967.295</strong>:</pre>
-        <pre class="pre-styled">docker run -p 9000:9000 ghcr.io/throttr/throttr:4.0.11-release-uint32</pre>
+        <pre class="pre-styled">docker run -p 9000:9000 ghcr.io/throttr/throttr:4.0.13-release-uint32</pre>
         <pre class="pre-styled" style="margin-bottom: 20px; margin-top: 60px;">Quotas and TTL upto <strong>18.446.744.073.709.551.615</strong>:</pre>
-        <pre class="pre-styled">docker run -p 9000:9000 ghcr.io/throttr/throttr:4.0.11-release-uint64</pre>
+        <pre class="pre-styled">docker run -p 9000:9000 ghcr.io/throttr/throttr:4.0.13-release-uint64</pre>
       </div>
     </div>
 
