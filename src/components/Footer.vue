@@ -42,7 +42,9 @@
     <div class="text-xs mt-20 mb-10">
 
       <div class="justify-center flex">
-        <img src="/8731267.jpeg" class="h-16 rounded-full mb-8" alt="Ian Torres">
+        <a href="https://github.com/zen0x7" target="_blank">
+          <img src="/8731267.jpeg" class="h-16 rounded-full mb-8" alt="Ian Torres">
+        </a>
       </div>
 
       Built with sovereignty by <a href="https://www.iantorres.cl" class="font-bold">Ian Torres</a>. <br><br> Released under AGPLv3.
